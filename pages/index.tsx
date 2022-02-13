@@ -1,7 +1,7 @@
 import Head from 'next/head'
 const { Client } = require('@notionhq/client')
 
-export default function Home({ entries }) {
+export default function Home({ entries }: { entries: any }) {
   const notion = new Client({ auth: process.env.NOTION_API_KEY })
 
   console.log(entries)
@@ -15,7 +15,7 @@ export default function Home({ entries }) {
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
         <h1 className="text-6xl font-bold">Cameron's Blog</h1>
 
-        {entries.map((entry) => (
+        {entries.map((entry: any) => (
           <div
             key={entry.id}
             className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full"
