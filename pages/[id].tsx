@@ -1,8 +1,9 @@
 import { Fragment } from 'react'
 import { getDatabase, getPage, getBlocks } from 'lib/notion'
-import { getInnerText } from 'src/components/Text'
+import { getInnerText } from 'src/components/TextContent'
 import Image from 'next/image'
 import Link from 'next/link'
+import Layout from 'src/components/Layout/Layout'
 
 const renderBlock = (block: any) => {
   const { type, id } = block
@@ -48,11 +49,8 @@ export default function Post({ page, blocks }: { page: any; blocks: any }) {
     return <div />
   }
   return (
-    <>
-      <header className="flex justify-center">
-        <Link href={`/`}>Home</Link>
-      </header>
-      <article className="mx-5 flex min-h-screen flex-col justify-center pt-5">
+    <Layout>
+      <article className="m-auto flex min-h-screen max-w-sm flex-col justify-center">
         <h1>{getInnerText(page.properties.Name.title)}</h1>
         <section>
           {blocks.map((block: any) => (
@@ -60,7 +58,7 @@ export default function Post({ page, blocks }: { page: any; blocks: any }) {
           ))}
         </section>
       </article>
-    </>
+    </Layout>
   )
 }
 
