@@ -1,15 +1,9 @@
-import { getDatabase } from 'lib/notion'
 import Head from 'next/head'
 import Link from 'next/link'
-import { Text } from 'src/components/Text'
 
 const { Client } = require('@notionhq/client')
 
-export const databaseId = process.env.NOTION_DATABASE_ID
-
 export default function Home({ posts }: { posts: any }) {
-  const notion = new Client({ auth: process.env.NOTION_API_KEY })
-
   console.log(posts)
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
@@ -39,11 +33,14 @@ export default function Home({ posts }: { posts: any }) {
 }
 
 export async function getStaticProps() {
-  const database = await getDatabase(databaseId)
+  const notion = new Client({ auth: process.env.NOTION_API_KEY })
+  const response = await notion.databases.query({
+    database_id: process.env.NOTION_DATABASE_ID,
+  })
 
   return {
     props: {
-      posts: database,
+      posts: response.results,
     },
     revalidate: 1,
   }
